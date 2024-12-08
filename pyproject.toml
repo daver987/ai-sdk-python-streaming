@@ -1,0 +1,136 @@
+[tool.poetry]
+name = "ai_sdk_python_streaming"
+version = "0.1.0"
+description = ""
+authors = ["daver987 <info@drobertson.pro>"]
+readme = "README.md"
+package-mode = false
+
+[tool.pyright]
+pythonVersion = "3.12"
+venvPath = "."
+venv = ".venv"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+annotated-types = "0.7.0"
+anyio = "4.4.0"
+certifi = "2024.7.4"
+charset-normalizer = "3.4.0"
+click = "8.1.7"
+distro = "1.9.0"
+dnspython = "2.6.1"
+email-validator = "2.2.0"
+fastapi = "0.111.1"
+fastapi-cli = "0.0.4"
+h11 = "0.14.0"
+httpcore = "1.0.5"
+httptools = "0.6.1"
+httpx = "0.27.0"
+idna = "3.7"
+jinja2 = "3.1.4"
+markdown-it-py = "3.0.0"
+markupsafe = "2.1.5"
+mdurl = "0.1.2"
+openai = "1.37.1"
+pydantic = "2.8.2"
+pydantic-core = "2.20.1"
+pygments = "2.18.0"
+python-dotenv = "1.0.1"
+python-multipart = "0.0.9"
+pyyaml = "6.0.1"
+requests = "2.32.3"
+rich = "13.7.1"
+shellingham = "1.5.4"
+sniffio = "1.3.1"
+starlette = "0.37.2"
+tqdm = "4.66.4"
+typer = "0.12.3"
+typing-extensions = "4.12.2"
+urllib3 = "2.2.3"
+uvicorn = "0.30.3"
+uvloop = "0.19.0"
+watchfiles = "0.22.0"
+websockets = "12.0"
+ruff = "^0.8.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+ai_sdk_python_streaming = "api:main"
+
+
+[tool.ruff]
+line-length = 240
+target-version = 'py312'
+exclude = ['build', '.venv']
+respect-gitignore = true
+
+[tool.ruff.format]
+quote-style = "double"
+docstring-code-format = true
+docstring-code-line-length = 20
+
+[tool.ruff.lint]
+ignore = [
+  'B006',
+  'C408',
+  'COM819',
+  'E731',
+  'ERA001',
+  'T201',
+  'G004',
+  'RET503',
+  'RUF012',
+  'S311',
+  'SIM108',
+  'SIM300',
+  'TRY003',
+  'TRY301',
+  'COM812',
+  'ISC001',
+]
+select = [
+  'A',     # flake8-builtins
+  'ASYNC', # https://docs.astral.sh/ruff/rules/#flake8-async-async
+  'B',     # flake8-bugbear
+  'BLE',   # flake8-blind-except
+  'C4',    # unnecessary comprehensions, map()
+  'COM',   # flake8-commas
+  'DTZ',   # flake8-datetimez
+  'E',     # pycodestyle
+  'ERA',   # No commented out code
+  'EXE',   # flake8-executable
+  'F',     # pyflakes
+  'FLY',   # flynt
+  'G',     # flake8-logging-format
+  'I',     # isort
+  'ICN',   # https://github.com/joaopalmeiro/flake8-import-conventions
+  'ISC',   # https://pypi.org/project/flake8-implicit-str-concat/
+  'LOG',   # flake8-logging
+  'PERF',  # perflint
+  'PIE',   # https://pypi.org/project/flake8-pie/
+  'PLC',   # Pylint conventions
+  'PLE',   # Pylint error
+  'PLW',   # Pylint warnings
+  'PT',    # https://pypi.org/project/flake8-pytest-style/
+  'PTH',   # flake8 use pathlib
+  'RET',   # https://pypi.org/project/flake8-return/
+  'RUF',   # Ruff rules
+  'S',     # https://docs.astral.sh/ruff/rules/#flake8-bandit-s
+  'SIM',   # https://pypi.org/project/flake8-simplify/
+  'T',     # flake8-debugger
+  'TRY',   # tryceratops
+  'UP',    # pyupgrade
+  'W',     # pycodestyle
+  #'ARG',  # flake8 unused arguments (not really helpful, unused func args are common and ok)
+  #'D',  # pydocstyle (too much)
+  #'N',  # pep8-naming (too opinionated)
+  #'NPY', # numpy
+  #'PD', # pandas
+  #'PL',  # Full Pylint (too much)
+  #'PLR',  # Pylint refactor (too much/too opinionated)
+]

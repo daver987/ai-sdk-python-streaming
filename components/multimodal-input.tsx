@@ -4,9 +4,9 @@ import type { ChatRequestOptions, CreateMessage, Message } from "ai";
 import { motion } from "framer-motion";
 import type React from "react";
 import {
-  useRef,
-  useEffect,
   useCallback,
+  useEffect,
+  useRef,
   type Dispatch,
   type SetStateAction,
 } from "react";
@@ -35,13 +35,13 @@ const suggestedActions = [
 export function MultimodalInput({
   chatId,
   input,
-  setInput,
+  setInput: setInputProp,
   isLoading,
-  stop,
+  stop: stopProp,
   messages,
-  setMessages,
-  append,
-  handleSubmit,
+  setMessages: setMessagesProp,
+  append: appendProp,
+  handleSubmit: handleSubmitProp,
   className,
 }: {
   chatId: string;
@@ -62,7 +62,7 @@ export function MultimodalInput({
     chatRequestOptions?: ChatRequestOptions,
   ) => void;
   className?: string;
-}) {
+}): React.JSX.Element {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
 
@@ -70,14 +70,14 @@ export function MultimodalInput({
     if (textareaRef.current) {
       adjustHeight();
     }
-  }, []);
+  });
 
-  const adjustHeight = () => {
+  const adjustHeight = useCallback(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 2}px`;
     }
-  };
+  }, []);
 
   const [localStorageInput, setLocalStorageInput] = useLocalStorage(
     "input",
@@ -89,30 +89,28 @@ export function MultimodalInput({
       const domValue = textareaRef.current.value;
       // Prefer DOM value over localStorage to handle hydration
       const finalValue = domValue || localStorageInput || "";
-      setInput(finalValue);
+      setInputProp(finalValue);
       adjustHeight();
     }
-    // Only run once after hydration
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [localStorageInput, setInputProp, adjustHeight]);
 
   useEffect(() => {
     setLocalStorageInput(input);
   }, [input, setLocalStorageInput]);
 
   const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(event.target.value);
+    setInputProp(event.target.value);
     adjustHeight();
   };
 
   const submitForm = useCallback(() => {
-    handleSubmit(undefined, {});
+    handleSubmitProp(undefined, {});
     setLocalStorageInput("");
 
     if (width && width > 768) {
       textareaRef.current?.focus();
     }
-  }, [handleSubmit, setLocalStorageInput, width]);
+  }, [handleSubmitProp, setLocalStorageInput, width]);
 
   return (
     <div className="relative w-full flex flex-col gap-4">
@@ -130,7 +128,7 @@ export function MultimodalInput({
               <Button
                 variant="ghost"
                 onClick={async () => {
-                  append({
+                  appendProp({
                     role: "user",
                     content: suggestedAction.action,
                   });
@@ -176,8 +174,8 @@ export function MultimodalInput({
           className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 border dark:border-zinc-600"
           onClick={(event) => {
             event.preventDefault();
-            stop();
-            setMessages((messages) => sanitizeUIMessages(messages));
+            stopProp();
+            setMessagesProp((messages) => sanitizeUIMessages(messages));
           }}
         >
           <StopIcon size={14} />

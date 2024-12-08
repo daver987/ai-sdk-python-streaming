@@ -1,12 +1,13 @@
 import requests
 
+
 def get_current_weather(latitude, longitude):
     # Format the URL with proper parameter substitution
     url = f"https://api.open-meteo.com/v1/forecast?latitude={latitude}&longitude={longitude}&current=temperature_2m&hourly=temperature_2m&daily=sunrise,sunset&timezone=auto"
 
     try:
-        # Make the API call
-        response = requests.get(url)
+        # Make the API call with timeout
+        response = requests.get(url, timeout=10)
 
         # Raise an exception for bad status codes
         response.raise_for_status()
